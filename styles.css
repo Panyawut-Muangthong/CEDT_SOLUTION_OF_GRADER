@@ -31,12 +31,16 @@ body {
 }
 
 /* Common Panel Styles - UPDATED TO FIX SCROLLING */
-.sidebar, .pdf-viewer, .solution-viewer {
+.sidebar,
+.pdf-viewer,
+.solution-viewer {
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--border-color);
-    height: 100vh; /* Forces columns to stay exactly screen height */
-    overflow: hidden; /* Prevents columns from stretching past the screen */
+    height: 100vh;
+    /* Forces columns to stay exactly screen height */
+    overflow: hidden;
+    /* Prevents columns from stretching past the screen */
 }
 
 .panel-header {
@@ -56,7 +60,8 @@ body {
 
 .problem-list {
     flex: 1;
-    overflow-y: auto; /* Enables the vertical scrolling */
+    overflow-y: auto;
+    /* Enables the vertical scrolling */
     padding: 10px;
 }
 
@@ -116,7 +121,7 @@ iframe {
     width: 100%;
     height: 100%;
     border: none;
-    display: none; 
+    display: none;
 }
 
 .placeholder {
@@ -184,7 +189,7 @@ code {
 
 .description-content {
     line-height: 1.6;
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     font-size: 15px;
     color: #d4d4d4;
 }
@@ -207,4 +212,76 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #777;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Tablets & Phones)
+   ========================================= */
+
+/* TABLETS (Screens smaller than 1024px) */
+@media (max-width: 1024px) {
+    .app-container {
+        grid-template-columns: 250px 1fr;
+        /* Sidebar + Main Content */
+        grid-template-rows: 50vh 50vh;
+        /* Split right side into Top/Bottom */
+    }
+
+    .sidebar {
+        grid-row: 1 / 3;
+        /* Sidebar spans top to bottom */
+        height: 100%;
+    }
+
+    .pdf-viewer,
+    .solution-viewer {
+        height: 100%;
+        /* Fit perfectly in their 50vh grid rows */
+        border-right: none;
+    }
+
+    .pdf-viewer {
+        border-bottom: 1px solid var(--border-color);
+        /* Separator between PDF and Code */
+    }
+}
+
+/* PHONES (Screens smaller than 768px) */
+@media (max-width: 768px) {
+    body {
+        overflow: auto;
+        /* Let the phone scroll natively */
+        height: auto;
+    }
+
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Make each section a readable height so the user can just scroll down */
+    .sidebar {
+        height: 40vh;
+        /* Sidebar takes 40% of the screen height */
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .pdf-viewer {
+        height: 60vh;
+        /* PDF takes 60% of the screen height */
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .solution-viewer {
+        height: 60vh;
+        /* Code takes 60% of the screen height */
+        width: 100%;
+        border-bottom: none;
+        border-right: none;
+    }
 }

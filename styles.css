@@ -30,11 +30,13 @@ body {
     height: 100vh;
 }
 
-/* Common Panel Styles */
+/* Common Panel Styles - UPDATED TO FIX SCROLLING */
 .sidebar, .pdf-viewer, .solution-viewer {
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--border-color);
+    height: 100vh; /* Forces columns to stay exactly screen height */
+    overflow: hidden; /* Prevents columns from stretching past the screen */
 }
 
 .panel-header {
@@ -54,7 +56,7 @@ body {
 
 .problem-list {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Enables the vertical scrolling */
     padding: 10px;
 }
 
@@ -114,7 +116,7 @@ iframe {
     width: 100%;
     height: 100%;
     border: none;
-    display: none; /* Hidden until loaded */
+    display: none; 
 }
 
 .placeholder {
@@ -182,7 +184,27 @@ code {
 
 .description-content {
     line-height: 1.6;
-    white-space: pre-wrap; /* Preserves text file formatting */
+    white-space: pre-wrap; 
     font-size: 15px;
     color: #d4d4d4;
+}
+
+/* =========================================
+   Custom Scrollbar (Added for the sidebar)
+   ========================================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777;
 }

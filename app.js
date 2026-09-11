@@ -4,11 +4,11 @@
 const problems = [
     {
         id: 1,
-        title: "1. Count the Ball",
-        tags: ["expression", "valuable"],
-        pdfPath: "data/pdf/q1.pdf",
-        cppPath: "data/code/ans1.cpp",
-        descPath: "data/description/desc1.txt"
+        title: "1.Hello Croissant",
+        tags: ["expression"],
+        pdfPath: "data/pdf/Hello Croissant.pdf",
+        cppPath: "data/code/Hello Croissant.cpp",
+        descPath: "data/description/Hello Croissant.txt"
     },
     {
         id: 2,

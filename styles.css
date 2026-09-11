@@ -1,0 +1,188 @@
+:root {
+    --bg-dark: #1e1e1e;
+    --bg-panel: #252526;
+    --border-color: #3e3e42;
+    --text-main: #cccccc;
+    --text-light: #ffffff;
+    --accent: #007acc;
+    --tag-bg: #333333;
+    --tag-text: #4fc1ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 3-Column Layout */
+.app-container {
+    display: grid;
+    grid-template-columns: 300px 1fr 1fr;
+    height: 100vh;
+}
+
+/* Common Panel Styles */
+.sidebar, .pdf-viewer, .solution-viewer {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+.panel-header {
+    padding: 15px;
+    background-color: var(--bg-panel);
+    border-bottom: 1px solid var(--border-color);
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* Sidebar List */
+.sidebar-header h2 {
+    font-size: 18px;
+    color: var(--text-light);
+}
+
+.problem-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.problem-card {
+    background-color: var(--bg-panel);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.problem-card:hover {
+    border-color: var(--border-color);
+}
+
+.problem-card.active {
+    border-color: var(--accent);
+    background-color: #2a2d32;
+}
+
+.problem-title {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* PDF Area */
+#pdf-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.iframe-container {
+    flex: 1;
+    position: relative;
+    background-color: #333;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none; /* Hidden until loaded */
+}
+
+.placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+}
+
+/* Tabs and Right Column */
+.tabs {
+    gap: 10px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.tab-btn:hover {
+    background-color: #333;
+}
+
+.tab-btn.active {
+    background-color: var(--accent);
+    color: white;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #1e1e1e;
+    position: relative;
+}
+
+.view-panel {
+    display: none;
+    padding: 20px;
+    height: 100%;
+}
+
+.view-panel.active {
+    display: block;
+}
+
+pre {
+    margin: 0;
+    height: 100%;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    height: 100%;
+    overflow-y: auto !important;
+}
+
+.description-content {
+    line-height: 1.6;
+    white-space: pre-wrap; /* Preserves text file formatting */
+    font-size: 15px;
+    color: #d4d4d4;
+}

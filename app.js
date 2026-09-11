@@ -467,7 +467,7 @@ async function loadProblem(id, cardElement) {
     document.getElementById("pdf-placeholder").style.display = "none";
     const iframe = document.getElementById("pdf-frame");
     iframe.style.display = "block";
-    iframe.src = problem.pdfPath;
+    iframe.src = problem.pdfPath + "#view=FitH";;
 
     // 3. Load C++ File
     try {

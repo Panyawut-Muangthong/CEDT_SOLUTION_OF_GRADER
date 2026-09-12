@@ -18,6 +18,20 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>Questions</h2>
+                <!-- ADDED FILTER CONTROLS -->
+                <div class="filter-container">
+                    <select id="tag-filter" class="filter-dropdown" onchange="renderProblemList()">
+                        <option value="all">All Tags</option>
+                    </select>
+                    <select id="star-filter" class="filter-dropdown" onchange="renderProblemList()">
+                        <option value="all">All Stars</option>
+                        <option value="1">⭐ 1 Star</option>
+                        <option value="2">⭐⭐ 2 Stars</option>
+                        <option value="3">⭐⭐⭐ 3 Stars</option>
+                        <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                        <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                    </select>
+                </div>
             </div>
             <div class="problem-list" id="problem-list">
                 <!-- Problems will be injected here by JavaScript -->

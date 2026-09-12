@@ -429,6 +429,30 @@ const problems = [
 ];
 
 // ==========================================
+// 2. LOGIC (DO NOT EDIT BELOW UNLESS NEEDED)
+// ==========================================
+
+// Initialize the application
+document.addEventListener("DOMContentLoaded", () => {
+    const listContainer = document.getElementById("problem-list");
+
+    // Render the sidebar
+    problems.forEach(problem => {
+        const card = document.createElement("div");
+        card.className = "problem-card";
+        card.onclick = () => loadProblem(problem.id, card);
+
+        const tagsHtml = problem.tags.map(tag => `<span class="tag">&lt;${tag}&gt;</span>`).join('');
+        
+        card.innerHTML = `
+            <div class="problem-title">${problem.title}</div>
+            <div class="tags">${tagsHtml}</div>
+        `;
+        listContainer.appendChild(card);
+    });
+});
+
+// ==========================================
 // 2. LOGIC (UPDATED WITH FILTERS)
 // ==========================================
 

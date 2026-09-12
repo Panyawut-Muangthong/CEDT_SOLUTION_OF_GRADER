@@ -557,15 +557,12 @@ async function loadProblem(id, cardElement) {
         if(descResponse.ok) {
             const descTextRaw = await descResponse.text();
             
-            // Step 1: Escape standard HTML characters so < and > don't break the page
             let safeText = descTextRaw.replace(/[&<>'"]/g, char => ({
                 '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
             }[char]));
             
-            // Step 2: Replace ||text|| with a clickable spoiler tag
             safeText = safeText.replace(/\|\|(.*?)\|\|/g, '<span class="spoiler" onclick="this.classList.add(\'revealed\')">$1</span>');
             
-            // Use innerHTML instead of textContent so our new span tags work
             document.getElementById("desc-text").innerHTML = safeText;
         } else {
             document.getElementById("desc-text").textContent = "Error: Could not find description file";
@@ -573,7 +570,11 @@ async function loadProblem(id, cardElement) {
     } catch (e) {
         document.getElementById("desc-text").textContent = "Error loading description.";
     }
+
+    // ADD THIS ONE LINE AT THE VERY END OF loadProblem:
+    toggleView('desc'); 
 }
+
 
 // Toggle between C++ Code and Description Text
 function toggleView(viewName) {
@@ -582,10 +583,12 @@ function toggleView(viewName) {
     document.getElementById("view-desc").classList.remove("active");
 
     if (viewName === 'code') {
-        document.querySelector(".tab-btn:nth-child(1)").classList.add("active");
+        // C++ Solution is now the 2nd button
+        document.querySelector(".tab-btn:nth-child(2)").classList.add("active");
         document.getElementById("view-code").classList.add("active");
     } else {
-        document.querySelector(".tab-btn:nth-child(2)").classList.add("active");
+        // Description is now the 1st button
+        document.querySelector(".tab-btn:nth-child(1)").classList.add("active");
         document.getElementById("view-desc").classList.add("active");
     }
 }

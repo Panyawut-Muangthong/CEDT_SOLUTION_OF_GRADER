@@ -18,7 +18,8 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>Questions</h2>
-                <!-- ADDED FILTER CONTROLS -->
+                <!-- ADDED FILTER LABEL & CONTROLS -->
+                <div style="font-size: 12px; color: var(--text-main); margin-bottom: -4px;">Filter problems:</div>
                 <div class="filter-container">
                     <select id="tag-filter" class="filter-dropdown" onchange="renderProblemList()">
                         <option value="all">All Tags</option>
@@ -39,6 +40,7 @@
         </aside>
 
         <!-- Column 2: PDF Viewer -->
+        <!-- (Leave your PDF viewer main section exactly as it is) -->
         <main class="pdf-viewer">
             <div class="panel-header">
                 <h3 id="pdf-title">Select a problem...</h3>
@@ -53,11 +55,12 @@
         <aside class="solution-viewer">
             <div class="panel-header tabs">
                 <div class="tab-group">
-                    <button class="tab-btn active" onclick="toggleView('code')">C++ Solution</button>
-                    <button class="tab-btn" onclick="toggleView('desc')">Description</button>
+                    <!-- SWAPPED: Description is now first (left), Code is second (right) -->
+                    <button class="tab-btn active" onclick="toggleView('desc')">Description</button>
+                    <button class="tab-btn" onclick="toggleView('code')">C++ Solution</button>
                 </div>
                 
-                <!-- NEW UI TOGGLE SWITCH -->
+                <!-- UI TOGGLE SWITCH -->
                 <div class="toggle-wrapper">
                     <span id="toggle-label" class="toggle-label">Blur</span>
                     <label class="switch">
@@ -68,13 +71,13 @@
             </div>
             
             <div class="content-area">
-                <!-- Code View -->
-                <div id="view-code" class="view-panel active">
+                <!-- Code View (Removed 'active' class) -->
+                <div id="view-code" class="view-panel">
                     <pre><code id="cpp-code" class="language-cpp blurred-content">// Source code will appear here</code></pre>
                 </div>
 
-                <!-- Description View -->
-                <div id="view-desc" class="view-panel">
+                <!-- Description View (Added 'active' class) -->
+                <div id="view-desc" class="view-panel active">
                     <div id="desc-text" class="description-content">
                         Description will appear here
                     </div>

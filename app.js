@@ -551,24 +551,32 @@ async function loadProblem(id, cardElement) {
         document.getElementById("cpp-code").textContent = "// Error loading file.";
     }
 
-    // Load Description File
+    // 4. Load Description File
     try {
         const descResponse = await fetch(problem.descPath);
         if(descResponse.ok) {
             const descTextRaw = await descResponse.text();
             
-            let safeText = descTextRaw.replace(/[&<>'"]/g, char => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-            }[char]));
+            // Convert the Markdown to HTML using Marked.js
+            let parsedHTML = marked.parse(descTextRaw);
             
-            safeText = safeText.replace(/\|\|(.*?)\|\|/g, '<span class="spoiler" onclick="this.classList.add(\'revealed\')">$1</span>');
+            // Add Discord-style spoilers back in
+            parsedHTML = parsedHTML.replace(/\|\|(.*?)\|\|/g, '<span class="spoiler" onclick="this.classList.add(\'revealed\')">$1</span>');
             
-            document.getElementById("desc-text").innerHTML = safeText;
+            // Inject the converted HTML into the page
+            const descContainer = document.getElementById("desc-text");
+            descContainer.innerHTML = parsedHTML;
+            
+            // Apply C++ syntax highlighting to the markdown code blocks
+            descContainer.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+            
         } else {
-            document.getElementById("desc-text").textContent = "Error: Could not find description file";
+            document.getElementById("desc-text").innerHTML = "Error: Could not find description file";
         }
     } catch (e) {
-        document.getElementById("desc-text").textContent = "Error loading description.";
+        document.getElementById("desc-text").innerHTML = "Error loading description.";
     }
 
     // ADD THIS ONE LINE AT THE VERY END OF loadProblem:

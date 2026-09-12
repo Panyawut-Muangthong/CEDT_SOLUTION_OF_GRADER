@@ -1,0 +1,181 @@
+# About
+
+This problem is a **basic introduction to C++**.
+
+You will practice the fundamentals of writing and running a simple C++ program.
+
+## 🧠 What You Will Learn
+
+- Including a library
+- Writing the `main()` function
+- Printing output
+- Reading input
+- Understanding basic C++ syntax
+- Working with variables
+- Using standard input and output
+
+---
+
+# 🟦 Key Concepts
+
+## 01 · `#include <iostream>`
+
+The `#include <iostream>` line allows your program to use C++'s **standard input and output tools**.
+
+It is commonly used when your program needs to read input from the user or print something to the screen.
+
+For example:
+
+```cpp
+#include <iostream>
+```
+
+---
+
+## 02 · `cin >> variables;`
+
+`cin` is an object provided by the `<iostream>` library that allows your program to **read data from standard input** and store it in a variable.
+
+For example:
+
+```cpp
+int age;
+
+cin >> age;
+```
+
+If the user enters:
+
+```text
+18
+```
+
+the value `18` will be stored in the variable `age`.
+
+---
+
+## 03 · `cout << variables;`
+
+`cout` is an object provided by the `<iostream>` library that allows your program to **print data to standard output**, usually the terminal.
+
+For example:
+
+```cpp
+int age = 18;
+
+cout << age;
+```
+
+The output will be:
+
+```text
+18
+```
+
+You can also output expressions:
+
+```cpp
+cout << 5 + 5;
+```
+
+The output will be:
+
+```text
+10
+```
+
+---
+
+# 📝 Example Program
+
+Here is a simple C++ program that reads a number and prints it:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+
+    cin >> number;
+    cout << number;
+
+    return 0;
+}
+```
+
+### Example Input
+
+```text
+10
+```
+
+### Example Output
+
+```text
+10
+```
+
+This simple program demonstrates the basic flow of a C++ program:
+
+**Input → Store in a variable → Output**
+
+---
+
+## 04 · `\n`, `\t`
+
+### `\n` — New Line
+
+`\n` is a special character that moves the output to a **new line**.
+
+For example:
+
+```cpp
+cout << "Hello\nWorld";
+```
+
+The output will be:
+
+```text
+Hello
+World
+```
+
+`\n` is similar to `endl`, but we generally prefer using `\n` when we only need to move to a new line.
+
+
+### `\t` — Tab
+
+`\t` is a special character that inserts a **tab**, similar to pressing the Tab key on your keyboard.
+
+For example:
+
+```cpp
+cout << "Name:\tJohn";
+```
+
+The output will be:
+
+```text
+Name:   John
+```
+
+It is useful for creating spacing or simple columns in your output.
+
+---
+
+### 📝 Example
+
+You can use `\n` and `\t` together:
+
+```cpp
+cout << "Name:\tJohn\n";
+cout << "Age:\t18\n";
+```
+
+The output will be:
+
+```text
+Name:   John
+Age:    18
+```

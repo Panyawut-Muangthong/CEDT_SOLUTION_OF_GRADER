@@ -540,7 +540,7 @@ async function loadProblem(id, cardElement) {
             const checkbox = document.getElementById("blur-toggle-checkbox");
             if (checkbox) checkbox.checked = false;
             const toggleLabel = document.getElementById("toggle-label");
-            if (toggleLabel) toggleLabel.textContent = "Blur";
+            if (toggleLabel) toggleLabel.textContent = "Reveal";
             
             codeBlock.removeAttribute('data-highlighted');
             hljs.highlightElement(codeBlock);

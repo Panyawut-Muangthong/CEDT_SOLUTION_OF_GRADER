@@ -429,70 +429,129 @@ const problems = [
 ];
 
 // ==========================================
-// 2. LOGIC (DO NOT EDIT BELOW UNLESS NEEDED)
+// 2. LOGIC (UPDATED WITH FILTERS)
 // ==========================================
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
-    const listContainer = document.getElementById("problem-list");
+    populateTags();
+    renderProblemList();
+});
 
-    // Render the sidebar
-    problems.forEach(problem => {
+// Automatically extract the star from your naming convention (e.g., "04_String_32" -> "3")
+function getProblemStar(problem) {
+    const parts = problem.title.split('_');
+    const lastPart = parts[parts.length - 1]; // Grabs the "32" from "04_String_32"
+    
+    // Check if the last part is a valid number
+    if (lastPart && !isNaN(lastPart) && lastPart.length >= 1) {
+        return parseInt(lastPart.charAt(0)); // Returns the "3"
+    }
+    return 0; // Fallback if no star is found in the title
+}
+
+// Dynamically generate the Tag dropdown based on your data
+function populateTags() {
+    const tagFilter = document.getElementById("tag-filter");
+    const allTags = new Set();
+    
+    problems.forEach(p => {
+        if (p.tags) {
+            p.tags.forEach(t => allTags.add(t));
+        }
+    });
+    
+    allTags.forEach(tag => {
+        const option = document.createElement("option");
+        option.value = tag;
+        option.textContent = `<${tag}>`;
+        tagFilter.appendChild(option);
+    });
+}
+
+// Render the sidebar list based on selected filters
+function renderProblemList() {
+    const listContainer = document.getElementById("problem-list");
+    listContainer.innerHTML = ''; // Clear existing list
+    
+    const selectedTag = document.getElementById("tag-filter").value;
+    const selectedStar = document.getElementById("star-filter").value;
+    
+    // Filter the array
+    const filteredProblems = problems.filter(problem => {
+        const problemStar = getProblemStar(problem).toString();
+        
+        const matchTag = selectedTag === "all" || problem.tags.includes(selectedTag);
+        const matchStar = selectedStar === "all" || problemStar === selectedStar;
+        
+        return matchTag && matchStar;
+    });
+    
+    // Create UI for the filtered problems
+    filteredProblems.forEach(problem => {
         const card = document.createElement("div");
         card.className = "problem-card";
+        
+        // Keep card highlighted if it is the currently active problem
+        const currentTitle = document.getElementById("pdf-title").textContent;
+        if (currentTitle === problem.title) {
+            card.classList.add("active");
+        }
+        
         card.onclick = () => loadProblem(problem.id, card);
-
+        
+        // Build Tags and Stars HTML
         const tagsHtml = problem.tags.map(tag => `<span class="tag">&lt;${tag}&gt;</span>`).join('');
+        const starNum = getProblemStar(problem);
+        const starHtml = starNum > 0 ? `<span class="star-rating">${'⭐'.repeat(starNum)}</span>` : '';
         
         card.innerHTML = `
-            <div class="problem-title">${problem.title}</div>
+            <div class="problem-title">${problem.title} ${starHtml}</div>
             <div class="tags">${tagsHtml}</div>
         `;
         listContainer.appendChild(card);
     });
-});
+}
 
 // Load a specific problem when clicked
 async function loadProblem(id, cardElement) {
-    // 1. Update UI Selection
     document.querySelectorAll(".problem-card").forEach(el => el.classList.remove("active"));
     cardElement.classList.add("active");
 
-    // Find the problem data
     const problem = problems.find(p => p.id === id);
     if (!problem) return;
 
-    // 2. Load PDF
+    // Load PDF
     document.getElementById("pdf-title").textContent = problem.title;
     document.getElementById("pdf-placeholder").style.display = "none";
     const iframe = document.getElementById("pdf-frame");
     iframe.style.display = "block";
-    iframe.src = problem.pdfPath + "#view=FitH";;
+    iframe.src = problem.pdfPath + "#view=FitH";
 
-    // 3. Load C++ File
+    // Load C++ File
     try {
         const cppResponse = await fetch(problem.cppPath);
         if(cppResponse.ok) {
             const cppText = await cppResponse.text();
             const codeBlock = document.getElementById("cpp-code");
             codeBlock.textContent = cppText;
-            codeBlock.removeAttribute('data-highlighted'); // Reset highlighter
+            codeBlock.removeAttribute('data-highlighted');
             hljs.highlightElement(codeBlock);
         } else {
-            document.getElementById("cpp-code").textContent = "// Error: Could not find C++ file at " + problem.cppPath;
+            document.getElementById("cpp-code").textContent = "// Error: Could not find C++ file";
         }
     } catch (e) {
-        document.getElementById("cpp-code").textContent = "// Error loading file. Make sure you are using a local server or GitHub Pages.";
+        document.getElementById("cpp-code").textContent = "// Error loading file.";
     }
 
-    // 4. Load Description File
+    // Load Description File
     try {
         const descResponse = await fetch(problem.descPath);
         if(descResponse.ok) {
             const descText = await descResponse.text();
             document.getElementById("desc-text").textContent = descText;
         } else {
-            document.getElementById("desc-text").textContent = "Error: Could not find description file at " + problem.descPath;
+            document.getElementById("desc-text").textContent = "Error: Could not find description file";
         }
     } catch (e) {
         document.getElementById("desc-text").textContent = "Error loading description.";
@@ -501,14 +560,10 @@ async function loadProblem(id, cardElement) {
 
 // Toggle between C++ Code and Description Text
 function toggleView(viewName) {
-    // Reset buttons
     document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-    
-    // Hide all views
     document.getElementById("view-code").classList.remove("active");
     document.getElementById("view-desc").classList.remove("active");
 
-    // Activate selected
     if (viewName === 'code') {
         document.querySelector(".tab-btn:nth-child(1)").classList.add("active");
         document.getElementById("view-code").classList.add("active");

@@ -1,0 +1,476 @@
+#About
+
+This guide introduces the core building blocks of the **cmath library** in C++.
+
+The `<cmath>` library provides useful mathematical functions that can help you perform calculations without having to implement the mathematics yourself.
+
+---
+
+# Warning
+
+Sometimes, when using **Microsoft Visual C++ (MSVC)**, the compiler may not provide `M_PI` automatically when you include `<cmath>`.
+
+If `M_PI` is not recognized, you can add:
+
+```cpp
+#define _USE_MATH_DEFINES
+```
+
+**before** including `<cmath>`.
+
+#Example
+
+```cpp
+#define _USE_MATH_DEFINES
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    cout << M_PI;
+
+    return 0;
+}
+```
+
+This allows you to use constants such as `M_PI`.
+
+`_USE_MATH_DEFINES` is mainly relevant to Microsoft Visual C++. Other compilers may provide `M_PI` differently or may not provide it at all.
+
+---
+
+# 🟦 Key Concepts
+
+## 01 . `#include <cmath>`
+
+The `#include <cmath>` line allows your program to use mathematical functions provided by the C++ standard library.
+
+For example:
+
+```cpp
+#include <cmath>
+```
+
+After including `<cmath>`, you can use functions such as `sqrt()`, `log()`, `log10()`, `log2()`, `sin()`, `cos()`, and `pow()`.
+
+---
+
+## 02 . `sqrt()`
+
+The `sqrt()` function calculates the **square root** of a number.
+
+The basic syntax is:
+
+```cpp
+sqrt(number)
+```
+
+For example:
+
+```cpp
+cout << sqrt(25);
+```
+
+The output will be:
+
+```text
+5
+```
+
+This is because:
+
+```text
+√25 = 5
+```
+
+You can also use variables:
+
+```cpp
+double number = 81;
+
+cout << sqrt(number);
+```
+
+The output will be:
+
+```text
+9
+```
+
+Another example:
+
+```cpp
+cout << sqrt(2);
+```
+
+The result will be approximately:
+
+```text
+1.41421
+```
+
+`sqrt()` calculates the square root. For example, `sqrt(16)` means √16, which is 4.
+
+---
+
+## 03 . `pow()`
+
+The `pow()` function is used to calculate a number raised to a **power**.
+
+The basic syntax is:
+
+```cpp
+pow(base, exponent)
+```
+
+For example:
+
+```cpp
+cout << pow(2, 3);
+```
+
+The output will be:
+
+```text
+8
+```
+
+This is because:
+
+```text
+2³ = 2 × 2 × 2 = 8
+```
+
+You can also use variables:
+
+```cpp
+double base = 5;
+double exponent = 2;
+
+cout << pow(base, exponent);
+```
+
+The output will be:
+
+```text
+25
+```
+
+The first argument is the number you want to raise to a power. The second argument is the power you want to raise it to.
+
+`pow(2, 3)` means 2 raised to the power of 3, not 2 multiplied by 3.
+
+---
+
+## 04 . `log()`
+
+The `log()` function calculates the **natural logarithm** of a number.
+
+The natural logarithm uses the mathematical constant **e** as its base.
+
+The basic syntax is:
+
+```cpp
+log(number)
+```
+
+For example:
+
+```cpp
+cout << log(1);
+```
+
+The output will be:
+
+```text
+0
+```
+
+This is because:
+
+```text
+ln(1) = 0
+```
+
+Another example:
+
+```cpp
+cout << log(2.718281828);
+```
+
+The output will be approximately:
+
+```text
+1
+```
+
+because:
+
+```text
+ln(e) = 1
+```
+
+In C++, `log()` means the **natural logarithm (base e)**.
+
+`log()` uses base e. It does NOT mean log base 10 in C++.
+
+---
+
+## 05 . `log10()`
+
+The `log10()` function calculates the **base-10 logarithm** of a number.
+
+The basic syntax is:
+
+```cpp
+log10(number)
+```
+
+For example:
+
+```cpp
+cout << log10(100);
+```
+
+The output will be:
+
+```text
+2
+```
+
+This is because:
+
+```text
+log₁₀(100) = 2
+```
+
+Another example:
+
+```cpp
+cout << log10(1000);
+```
+
+The output will be:
+
+```text
+3
+```
+
+because:
+
+```text
+10³ = 1000
+```
+
+Use `log10()` when you specifically need logarithm base 10.
+
+---
+
+## 06 . `log2()`
+
+The `log2()` function calculates the **base-2 logarithm** of a number.
+
+The basic syntax is:
+
+```cpp
+log2(number)
+```
+
+For example:
+
+```cpp
+cout << log2(8);
+```
+
+The output will be:
+
+```text
+3
+```
+
+This is because:
+
+```text
+log₂(8) = 3
+```
+
+because:
+
+```text
+2³ = 8
+```
+
+Another example:
+
+```cpp
+cout << log2(1024);
+```
+
+The output will be:
+
+```text
+10
+```
+
+because:
+
+```text
+2¹⁰ = 1024
+```
+
+`log2()` is especially useful when working with binary numbers, bits, and powers of 2.
+
+---
+
+## 07 . `sin()`
+
+The `sin()` function calculates the **sine** of an angle.
+
+The important thing to remember is that `sin()` expects the angle to be given in **radians**, not degrees.
+
+The basic syntax is:
+
+```cpp
+sin(angle)
+```
+
+For example:
+
+```cpp
+cout << sin(0);
+```
+
+The output will be:
+
+```text
+0
+```
+
+For a 90° angle, you need to convert it to radians:
+
+```text
+90° = π / 2 radians
+```
+
+So you can write:
+
+```cpp
+cout << sin(M_PI / 2);
+```
+
+The result will be approximately:
+
+```text
+1
+```
+
+`sin()` uses radians. A common mistake is passing `90` directly and expecting it to mean 90 degrees.
+
+---
+
+## 08 . `cos()`
+
+The `cos()` function calculates the **cosine** of an angle.
+
+Just like `sin()`, the angle must be given in **radians**.
+
+The basic syntax is:
+
+```cpp
+cos(angle)
+```
+
+For example:
+
+```cpp
+cout << cos(0);
+```
+
+The output will be:
+
+```text
+1
+```
+
+For a 90° angle:
+
+```cpp
+cout << cos(M_PI / 2);
+```
+
+The result will be approximately:
+
+```text
+0
+```
+
+The result may not be exactly `0` because computers use floating-point numbers. You may see a very small value such as `6.12323e-17`. This is normal.
+
+Small floating-point errors are normal when working with trigonometric functions.
+
+---
+
+# 📝 Example Program
+
+Here is a simple program demonstrating the functions:
+
+```cpp
+#define _USE_MATH_DEFINES
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    cout << "Square Root: " << sqrt(25) << "\n";
+    cout << "Power: " << pow(2, 3) << "\n";
+    cout << "Natural Log: " << log(1) << "\n";
+    cout << "Log Base 10: " << log10(100) << "\n";
+    cout << "Log Base 2: " << log2(8) << "\n";
+    cout << "Sin: " << sin(0) << "\n";
+    cout << "Cos: " << cos(0) << "\n";
+
+    return 0;
+}
+```
+
+### Example Output
+
+```text
+Square Root: 5
+Power: 8
+Natural Log: 0
+Log Base 10: 2
+Log Base 2: 3
+Sin: 0
+Cos: 1
+```
+
+---
+
+# 🧠 Quick Summary
+
+| Function  | Purpose                    | Example            |
+| --------- | -------------------------- | ------------------ |
+| `sqrt()`  | Calculates square root     | `sqrt(25)` → `5`   |
+| `pow()`   | Raises a number to a power | `pow(2, 3)` → `8`  |
+| `log()`   | Natural logarithm (base e) | `log(1)` → `0`     |
+| `log10()` | Logarithm with base 10     | `log10(100)` → `2` |
+| `log2()`  | Logarithm with base 2      | `log2(8)` → `3`    |
+| `sin()`   | Calculates sine            | `sin(0)` → `0`     |
+| `cos()`   | Calculates cosine          | `cos(0)` → `1`     |
+
+Remember:
+
+* `sqrt()` calculates the **square root**.
+* `pow()` calculates a **power**.
+* `log()` calculates the **natural logarithm (base e)**.
+* `log10()` calculates **logarithm base 10**.
+* `log2()` calculates **logarithm base 2**.
+* `sin()` calculates **sine**.
+* `cos()` calculates **cosine**.
+* `sin()` and `cos()` use **radians**, not degrees.
+* `M_PI` represents **π** when it is available.

@@ -53,9 +53,41 @@ body {
 }
 
 /* Sidebar List */
+/* Sidebar Header & Filters */
+.sidebar-header {
+    padding: 15px;
+    background-color: var(--bg-panel);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Space between title and filters */
+}
+
 .sidebar-header h2 {
     font-size: 18px;
     color: var(--text-light);
+}
+
+.filter-container {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-dropdown {
+    flex: 1;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.star-rating {
+    font-size: 11px;
+    margin-left: 6px;
 }
 
 .problem-list {

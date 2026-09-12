@@ -427,33 +427,8 @@ const problems = [
         descPath: "data/description/04_Array_32.txt"
     }
 ];
-
 // ==========================================
-// 2. LOGIC (DO NOT EDIT BELOW UNLESS NEEDED)
-// ==========================================
-
-// Initialize the application
-document.addEventListener("DOMContentLoaded", () => {
-    const listContainer = document.getElementById("problem-list");
-
-    // Render the sidebar
-    problems.forEach(problem => {
-        const card = document.createElement("div");
-        card.className = "problem-card";
-        card.onclick = () => loadProblem(problem.id, card);
-
-        const tagsHtml = problem.tags.map(tag => `<span class="tag">&lt;${tag}&gt;</span>`).join('');
-        
-        card.innerHTML = `
-            <div class="problem-title">${problem.title}</div>
-            <div class="tags">${tagsHtml}</div>
-        `;
-        listContainer.appendChild(card);
-    });
-});
-
-// ==========================================
-// 2. LOGIC (UPDATED WITH FILTERS)
+// 2. LOGIC (UPDATED WITH FILTERS, BLUR, AND HINTS)
 // ==========================================
 
 // Initialize the application
@@ -465,13 +440,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // Automatically extract the star from your naming convention (e.g., "04_String_32" -> "3")
 function getProblemStar(problem) {
     const parts = problem.title.split('_');
-    const lastPart = parts[parts.length - 1]; // Grabs the "32" from "04_String_32"
+    const lastPart = parts[parts.length - 1]; 
     
     // Check if the last part is a valid number
     if (lastPart && !isNaN(lastPart) && lastPart.length >= 1) {
-        return parseInt(lastPart.charAt(0)); // Returns the "3"
+        return parseInt(lastPart.charAt(0)); 
     }
-    return 0; // Fallback if no star is found in the title
+    return 0; 
 }
 
 // Dynamically generate the Tag dropdown based on your data
@@ -559,6 +534,14 @@ async function loadProblem(id, cardElement) {
             const cppText = await cppResponse.text();
             const codeBlock = document.getElementById("cpp-code");
             codeBlock.textContent = cppText;
+            
+            // RESET THE BLUR EVERY TIME WE LOAD A NEW PROBLEM
+            codeBlock.classList.add("blurred-content");
+            const checkbox = document.getElementById("blur-toggle-checkbox");
+            if (checkbox) checkbox.checked = false;
+            const toggleLabel = document.getElementById("toggle-label");
+            if (toggleLabel) toggleLabel.textContent = "Blur";
+            
             codeBlock.removeAttribute('data-highlighted');
             hljs.highlightElement(codeBlock);
         } else {
@@ -572,8 +555,18 @@ async function loadProblem(id, cardElement) {
     try {
         const descResponse = await fetch(problem.descPath);
         if(descResponse.ok) {
-            const descText = await descResponse.text();
-            document.getElementById("desc-text").textContent = descText;
+            const descTextRaw = await descResponse.text();
+            
+            // Step 1: Escape standard HTML characters so < and > don't break the page
+            let safeText = descTextRaw.replace(/[&<>'"]/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[char]));
+            
+            // Step 2: Replace ||text|| with a clickable spoiler tag
+            safeText = safeText.replace(/\|\|(.*?)\|\|/g, '<span class="spoiler" onclick="this.classList.add(\'revealed\')">$1</span>');
+            
+            // Use innerHTML instead of textContent so our new span tags work
+            document.getElementById("desc-text").innerHTML = safeText;
         } else {
             document.getElementById("desc-text").textContent = "Error: Could not find description file";
         }
@@ -594,5 +587,22 @@ function toggleView(viewName) {
     } else {
         document.querySelector(".tab-btn:nth-child(2)").classList.add("active");
         document.getElementById("view-desc").classList.add("active");
+    }
+}
+
+// Toggle the blur based on the checkbox state
+function toggleCodeBlur() {
+    const codeBlock = document.getElementById("cpp-code");
+    const checkbox = document.getElementById("blur-toggle-checkbox");
+    const label = document.getElementById("toggle-label");
+    
+    if (checkbox && checkbox.checked) {
+        // Switch is ON -> Reveal code
+        codeBlock.classList.remove("blurred-content");
+        if (label) label.textContent = "Reveal";
+    } else {
+        // Switch is OFF -> Blur code
+        codeBlock.classList.add("blurred-content");
+        if (label) label.textContent = "Blur";
     }
 }

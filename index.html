@@ -52,14 +52,25 @@
         <!-- Column 3: Solution & Description -->
         <aside class="solution-viewer">
             <div class="panel-header tabs">
-                <button class="tab-btn active" onclick="toggleView('code')">C++ Solution</button>
-                <button class="tab-btn" onclick="toggleView('desc')">Description</button>
+                <div class="tab-group">
+                    <button class="tab-btn active" onclick="toggleView('code')">C++ Solution</button>
+                    <button class="tab-btn" onclick="toggleView('desc')">Description</button>
+                </div>
+                
+                <!-- NEW UI TOGGLE SWITCH -->
+                <div class="toggle-wrapper">
+                    <span id="toggle-label" class="toggle-label">Blur</span>
+                    <label class="switch">
+                        <input type="checkbox" id="blur-toggle-checkbox" onchange="toggleCodeBlur()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
             </div>
             
             <div class="content-area">
                 <!-- Code View -->
                 <div id="view-code" class="view-panel active">
-                    <pre><code id="cpp-code" class="language-cpp">// Source code will appear here</code></pre>
+                    <pre><code id="cpp-code" class="language-cpp blurred-content">// Source code will appear here</code></pre>
                 </div>
 
                 <!-- Description View -->

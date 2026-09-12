@@ -1,4 +1,6 @@
 #include <iostream>
+#include <climits>
+#include <algorithm>
 int main() {
   int x, y;
   int control = 0;

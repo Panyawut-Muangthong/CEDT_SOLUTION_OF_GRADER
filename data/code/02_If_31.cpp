@@ -21,7 +21,7 @@ int main() {
   if (m1 <= 3) temp += 31;
   if (m1 <= 2) temp += 28;
   if (m1 <= 1) temp += 31;
-  if ((y1 % 400 == 0) || (y1 % 4 == 0 && y1 % 100 != 0)) temp++;
+  if (m1 <= 2 && ((y1 % 400 == 0) || (y1 % 4 == 0 && y1 % 100 != 0))) temp++;
   int red = temp - d1 + 1;
   temp = 0;
   if (m2 > 11) temp += 30;

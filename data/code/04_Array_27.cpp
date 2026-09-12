@@ -1,4 +1,6 @@
 #include <iostream>
+#include <climits>
+#include <algorithm>
 int main() {
   int n;
   std::cin >> n;

@@ -228,6 +228,8 @@ code {
     /* DELETE the white-space: pre-wrap; line that used to be here! */
     font-size: 15px;
     color: #d4d4d4;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /* =========================================

@@ -1,18 +1,18 @@
 # About
 
-This problem is a **basic introduction to C++**.
+This guide introduces the core building blocks of modern, industry-standard C++.
 
-You will practice the fundamentals of writing and running a simple C++ program.
+You will practice writing clean, maintainable code using the standard library properly, following professional coding conventions.
 
 ## 🧠 What You Will Learn
 
-- Including a library
-- Writing the `main()` function
-- Printing output
-- Reading input
-- Understanding basic C++ syntax
-- Working with variables
-- Using standard input and output
+1. Including header files (`#include <iostream>`)
+2. Understanding the standard namespace and why to avoid `using namespace std;`
+3. Writing the `int main()` entry point
+4. Reading standard input (`std::cin >>`)
+5. Printing standard output (`std::cout <<`)
+6. Formatting output using escape sequences (`\n`, `\t`)
+7. Ending statements with semicolons (`;`)
 
 ---
 
@@ -20,11 +20,7 @@ You will practice the fundamentals of writing and running a simple C++ program.
 
 ## 01 · `#include <iostream>`
 
-The `#include <iostream>` line allows your program to use C++'s **standard input and output tools**.
-
-It is commonly used when your program needs to read input from the user or print something to the screen.
-
-For example:
+The `#include <iostream>` preprocessor directive imports standard input/output stream definitions. It gives your program access to tools like `std::cin` and `std::cout`.
 
 ```cpp
 #include <iostream>
@@ -32,16 +28,56 @@ For example:
 
 ---
 
-## 02 · `cin >> variables;`
+## 02 · Why Avoid `using namespace std;`?
 
-`cin` is an object provided by the `<iostream>` library that allows your program to **read data from standard input** and store it in a variable.
+In beginner tutorials, you often see:
 
-For example:
+```cpp
+using namespace std; // Not recommended in professional code
+```
+
+While it saves keystrokes, **avoid this in real-world code** for several critical reasons:
+
+* **Name Collisions:** The `std` namespace contains thousands of identifiers (like `count`, `min`, `max`, `size`, `data`). If you define your own variable or function named `count`, the compiler cannot determine whether you mean your `count` or `std::count`, causing compiler errors or silent bugs.
+* **Header Pollution:** If placed in a header file (`.h`/`.hpp`), `using namespace std;` forces the entire standard namespace into every file that includes that header, breaking encapsulation across the entire project.
+* **Readability and Explicit Intent:** Writing `std::cin` or `std::cout` makes it instantly clear to any reader that the identifier belongs to the standard library, not local or third-party code.
+
+---
+
+## 03 · The `main()` Function
+
+Every executable C++ program requires a `main()` function. It serves as the program's starting execution point.
+
+```cpp
+int main() {
+    // Code executes sequentially here
+    return 0; // Signals successful termination to the operating system
+}
+```
+
+---
+
+## 04 · Semicolons (`;`)
+
+In C++, the semicolon is a **statement terminator**. It tells the compiler where an instruction ends.
+
+* Every variable declaration, assignment, function call, and input/output statement must end with a semicolon.
+* Omitting a semicolon produces a compiler error because C++ ignores whitespace and newlines when parsing statements.
+
+```cpp
+int age = 18;  // Statement ended with ';'
+std::cout << age; // Statement ended with ';'
+```
+
+---
+
+## 05 · Standard Input: `std::cin >>`
+
+`std::cin` reads formatted input from the standard input stream (keyboard) and uses the extraction operator (`>>`) to store the value into a variable.
 
 ```cpp
 int age;
-
-cin >> age;
+std::cin >> age;
 ```
 
 If the user enters:
@@ -50,35 +86,32 @@ If the user enters:
 18
 ```
 
-the value `18` will be stored in the variable `age`.
+The integer `18` is parsed and stored inside `age`.
 
 ---
 
-## 03 · `cout << variables;`
+## 06 · Standard Output: `std::cout <<`
 
-`cout` is an object provided by the `<iostream>` library that allows your program to **print data to standard output**, usually the terminal.
-
-For example:
+`std::cout` sends formatted data to the standard output stream (terminal) using the insertion operator (`<<`).
 
 ```cpp
 int age = 18;
-
-cout << age;
+std::cout << age;
 ```
 
-The output will be:
+Output:
 
 ```text
 18
 ```
 
-You can also output expressions:
+You can also output expressions directly:
 
 ```cpp
-cout << 5 + 5;
+std::cout << 5 + 5;
 ```
 
-The output will be:
+Output:
 
 ```text
 10
@@ -86,19 +119,60 @@ The output will be:
 
 ---
 
-# 📝 Example Program
+## 07 · Formatting Output: `\n` and `\t`
 
-Here is a simple C++ program that reads a number and prints it:
+### `\n` — Newline
+
+`\n` shifts the cursor to the beginning of the next line.
+
+```cpp
+std::cout << "Hello\nWorld\n";
+```
+
+Output:
+
+```text
+Hello
+World
+```
+
+> **Performance Note:** Prefer `\n` over `std::endl`. While `std::endl` inserts a newline, it also forces a buffer flush (`std::flush`), which causes unnecessary performance overhead in I/O-heavy programs.
+
+### `\t` — Horizontal Tab
+
+`\t` moves the cursor to the next tab stop, making it useful for aligning tabular output:
+
+```cpp
+std::cout << "Name:\tJohn\n";
+std::cout << "Age:\t18\n";
+```
+
+Output:
+
+```text
+Name:   John
+Age:    18
+```
+
+---
+
+# 📝 Complete Example Program
+
+A complete, clean C++ program reading user input and formatting the output without polluting the global namespace:
 
 ```cpp
 #include <iostream>
-using namespace std;
 
 int main() {
-    int number;
+    int id;
+    int score;
 
-    cin >> number;
-    cout << number;
+    // Read values from standard input
+    std::cin >> id >> score;
+
+    // Print aligned report to standard output
+    std::cout << "ID:\t" << id << "\n";
+    std::cout << "Score:\t" << score << "\n";
 
     return 0;
 }
@@ -107,75 +181,12 @@ int main() {
 ### Example Input
 
 ```text
-10
+101 95
 ```
 
 ### Example Output
 
 ```text
-10
-```
-
-This simple program demonstrates the basic flow of a C++ program:
-
-**Input → Store in a variable → Output**
-
----
-
-## 04 · `\n`, `\t`
-
-### `\n` — New Line
-
-`\n` is a special character that moves the output to a **new line**.
-
-For example:
-
-```cpp
-cout << "Hello\nWorld";
-```
-
-The output will be:
-
-```text
-Hello
-World
-```
-
-`\n` is similar to `endl`, but we generally prefer using `\n` when we only need to move to a new line.
-
-
-### `\t` — Tab
-
-`\t` is a special character that inserts a **tab**, similar to pressing the Tab key on your keyboard.
-
-For example:
-
-```cpp
-cout << "Name:\tJohn";
-```
-
-The output will be:
-
-```text
-Name:   John
-```
-
-It is useful for creating spacing or simple columns in your output.
-
----
-
-### 📝 Example
-
-You can use `\n` and `\t` together:
-
-```cpp
-cout << "Name:\tJohn\n";
-cout << "Age:\t18\n";
-```
-
-The output will be:
-
-```text
-Name:   John
-Age:    18
+ID:     101
+Score:  95
 ```

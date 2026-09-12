@@ -610,10 +610,10 @@ function toggleCodeBlur() {
     if (checkbox && checkbox.checked) {
         // Switch is ON -> Reveal code
         codeBlock.classList.remove("blurred-content");
-        if (label) label.textContent = "Reveal";
+        if (label) label.textContent = "Blur";
     } else {
         // Switch is OFF -> Blur code
         codeBlock.classList.add("blurred-content");
-        if (label) label.textContent = "Blur";
+        if (label) label.textContent = "Reveal";
     }
 }
